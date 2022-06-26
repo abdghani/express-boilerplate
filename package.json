@@ -1,9 +1,13 @@
 {
   "name": "mylease",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "lint": "eslint --debug ./",
+    "lint:fix": "eslint --debug ./ --fix",
+    "prettier": "prettier \"**/*.+(js|jsx|json|css|md)\"",
+    "prettier:fix": "prettier --write \"**/*.+(js|jsx|json|css|md)\""
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -25,5 +29,12 @@
   },
   "_moduleAliases": {
     "@app": "."
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^7.15.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.2.1"
   }
 }
