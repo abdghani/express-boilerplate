@@ -15,9 +15,8 @@ const saveUser = async (req, res, next) => {
     const hash = bcrypt.hashSync(password, 10)
     const foundUser = await userModel.emailExist(email)
 
-    if (!isNull(foundUser)) throw { status: 400, message: 'User alrteady exists' }
+    if (!isNull(foundUser)) throw { status: 400, message: 'User already exists' }
 
-    // adding new user
     const user = userModel({ email, role, name, password: hash })
     await user.save()
 

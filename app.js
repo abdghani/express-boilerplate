@@ -20,19 +20,18 @@ const corsOptions = {
 app.use(cors(corsOptions))
 app.use(authorizeUser)
 app.use(cookieParser())
-
-app.use('/api/user', require('@app/routes/user'))
-app.use('/', (_, res) => res.send('Api server is up'))
+require('@app/routes/index')(app)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404))
 })
 
-const errorLogger = (error, req, res, next) => {
-  // for logging errors
-  winston.error(error) // or using any fancy logging library
-  next(error) // forward to next middleware
+const errorLogger = (error, req, res) => {
+  winston.error(error.message) // or using any fancy logging library
+  return res
+    .status(error.status || 500)
+    .json({ status: error.status || 500, message: error.message || 'Internal Server Error' })
 }
 
 const failSafeHandler = (err, _, res) =>
