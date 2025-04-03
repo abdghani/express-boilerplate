@@ -27,11 +27,12 @@ app.use((req, res, next) => {
   next(createError(404))
 })
 
-const errorLogger = (error, req, res) => {
+const errorLogger = (error, req, res, next) => {
   winston.error(error.message) // or using any fancy logging library
-  return res
+  res
     .status(error.status || 500)
     .json({ status: error.status || 500, message: error.message || 'Internal Server Error' })
+  next(error)
 }
 
 const failSafeHandler = (err, _, res) =>
